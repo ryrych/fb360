@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.2.2'
+
 gem 'rails', '4.2.1'
 gem 'sqlite3'
 gem 'sass-rails', '~> 5.0'
@@ -42,3 +44,6 @@ group :test do
   gem 'email_spec'
   gem 'simplecov', require: false
 end
+
+gem 'rails_12factor', group: :production
+
