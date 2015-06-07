@@ -1,0 +1,8 @@
+%h1
+  = 'Edit profile'
+
+.col-md-6
+  = simple_form_for user, url: user_profile_path, method: :put do |f|
+    = f.input :password
+    = f.input :password_confirmation
+    = f.button :submit, class: 'btn-info'

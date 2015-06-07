@@ -1,0 +1,28 @@
+%h1
+  Users
+  = link_to 'add new', new_admin_user_path, class: 'btn btn-info'
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Name
+      %th Email
+      %th Admin
+      %th Archived
+      %th Actions
+  %tbody
+    - users.each do |user|
+      %tr
+        %td= link_to user.full_name, edit_admin_user_path(user), class: 'btn btn-default'
+        %td= user.email
+        %td= user.admin?
+        %td= user.archived?
+        %td
+          - if user.admin?
+            = link_to 'Remove admin rights', admin_user_path(user, user: {admin: false}), method: :put, class: 'btn btn-default'
+          - else
+            = link_to 'Give admin rights', admin_user_path(user, user: {admin: true}), method: :put, class: 'btn btn-default'
+          - if user.archived?
+            = link_to 'Unarchive', admin_user_path(user, user: {archived: false}), method: :put, class: 'btn btn-default'
+          - else
+            = link_to 'Archive', admin_user_path(user, user: {archived: true}), method: :put, class: 'btn btn-default'

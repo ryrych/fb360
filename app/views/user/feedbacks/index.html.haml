@@ -1,0 +1,41 @@
+%h1
+  Browse feedback
+  = link_to 'Received feedback', user_feedbacks_path(q: {receiver_id_eq: current_user.id}), class: 'btn btn-default'
+  = link_to 'My editable feedback', user_feedbacks_path(q: {giver_id_eq: current_user.id, published_eq: false}), class: 'btn btn-default'
+
+= simple_form_for q, url: user_feedbacks_path, html: {method: :get} do |f|
+
+  .col-md-2
+    = f.input :receiver_id_eq, as: :select, collection: users, include_blank: 'All', label: 'Receiver'
+  .col-md-2
+    = f.input :giver_id_eq, collection: users, include_blank: 'All', label: 'Giver'
+  .col-md-2
+    = f.input :feedback_type_eq, as: :select, collection: feedback_types, include_blank: 'All', label: 'Type'
+  .col-md-2
+    = f.input :created_at_gteq, as: :date_picker, label: 'Created after', input_html: {value: q_created_at_gteq}
+  .col-md-2
+    = f.input :created_at_lteq, as: :date_picker, label: 'Created before', input_html: {value: q_created_at_lteq}
+  .col-md-2
+    = f.submit 'Filter', class: 'btn btn-info', style: 'margin-top:25px'
+    = link_to 'Clear', user_feedbacks_path, class: 'btn btn-default', style: 'margin-top:25px'
+
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Content
+      %th= sort_link(q, :receiver_id, 'Receiver')
+      %th= sort_link(q, :giver_id, 'Giver')
+      %th= sort_link(q, :feedback_type, 'Type')
+      %th{style:'width:150px'} Actions
+  %tbody
+    - feedbacks.each do |feedback|
+      %tr{class: feedback.tr_class}
+        %td= feedback.content
+        %td= feedback.receiver
+        %td= feedback.giver
+        %td= feedback.feedback_type
+        %td
+          - if feedback.giver == current_user && !feedback.published?
+            = link_to 'Edit', edit_user_feedback_path(feedback), class: 'btn btn-info'
+            = link_to 'Destroy', user_feedback_path(feedback), method: :delete, class: 'btn btn-danger'

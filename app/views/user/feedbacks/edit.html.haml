@@ -1,0 +1,11 @@
+%h1
+  = 'Edit feedback'
+  = link_to 'Back', user_feedbacks_path, class: 'btn btn-default'
+
+
+.col-md-6
+  = simple_form_for [:user, feedback] do |f|
+    = f.input :receiver_id, as: :select, collection: users, include_blank: false
+    = f.input :feedback_type, as: :select, collection: feedback_types, include_blank: false
+    = f.input :content
+    = f.button :submit, class: 'btn-info'

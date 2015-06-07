@@ -1,0 +1,28 @@
+!!!
+%html
+%head
+  %title Fb360
+  = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+  = javascript_include_tag 'application', 'data-turbolinks-track' => true
+  = csrf_meta_tags
+%body
+  #nav.navbar.navbar-default.navbar-fixed-top
+    - if current_user
+      = link_to 'Give feedbacks', new_user_feedback_path, class: 'navbar-brand'
+      = link_to 'Browse feedbacks', user_feedbacks_path, class: 'navbar-brand'
+      = link_to 'Profile', edit_user_profile_path, class: 'navbar-brand'
+      - if current_user.admin?
+        = link_to 'Users', admin_users_path, class: 'navbar-brand'
+        = link_to 'Publish feedbacks', admin_publish_feedback_path, class: 'navbar-brand'
+      = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'navbar-brand'
+    - else
+      = link_to 'Sign in', new_user_session_path, class: 'navbar-brand'
+
+  %div.flash-container
+    - if notice
+      .col-md-12.flash.flash-notice= notice
+    - if alert
+      .col-md-12.flash.flash-alert= alert
+
+  .col-md-12
+    = yield
