@@ -6,7 +6,7 @@ class FeedbackCreator
   end
 
   def perform
-    Feedback.feedbeck_types.each { |name| create_feedback(name) }
+    Feedback::FEEDBACK_TYPES.each { |name| create_feedback(name) }
   end
 
   private

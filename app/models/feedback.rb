@@ -1,4 +1,7 @@
 class Feedback < ActiveRecord::Base
+  FEEDBACK_TYPES = %w(bad good future)
+  FEEDBACK_TYPES_DICTIONARY = {'bad' => 'Improve it', 'good' => 'Keep it up', 'future' => 'Start it'}
+
   belongs_to :giver, class_name: User, foreign_key: :giver_id
   belongs_to :receiver, class_name: User, foreign_key: :receiver_id
 
@@ -11,15 +14,15 @@ class Feedback < ActiveRecord::Base
     not_published.update_all(published: true)
   end
 
-  def self.feedbeck_types
-    %w(bad good future)
+  def self.feedbeck_types_for_select
+    FEEDBACK_TYPES.map { |type| [FEEDBACK_TYPES_DICTIONARY[type], type] }
   end
 
   def tr_class
     if feedback_type == 'good'
       'success'
     elsif feedback_type == 'bad'
-      'danger'
+      'orange'
     else
       'info'
     end

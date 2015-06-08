@@ -4,7 +4,7 @@ class User::FeedbacksController < User::UserController
 
   expose(:feedback, attributes: :feedback_params)
   expose(:users) { User.active.for_display }
-  expose(:feedback_types) { Feedback.feedbeck_types }
+  expose(:feedback_types) { Feedback.feedbeck_types_for_select }
   expose(:q) { Feedback.for_display(current_user).ransack(params[:q]) }
   expose(:feedbacks) do
     q.sorts = 'created_at desc' if q.sorts.empty?

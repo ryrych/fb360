@@ -5,13 +5,13 @@
     %label Receiver
     = select_tag 'receiver_id', options_from_collection_for_select(users, 'id', 'full_name', @receiver.id), class: 'form-control'
   .form-group
-    %label Bad
+    %label Improve it - You could work harder on...
     = text_area_tag 'content[bad]', nil, class: 'form-control'
   .form-group
-    %label Good
+    %label Keep it up - I appreciate you for...
     = text_area_tag 'content[good]', nil, class: 'form-control'
   .form-group
-    %label Future
+    %label Start it - consider beginning to...
     = text_area_tag 'content[future]', nil, class: 'form-control'
 
   = submit_tag 'Give feedback', class: 'btn btn-info'
