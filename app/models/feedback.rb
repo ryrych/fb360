@@ -6,15 +6,19 @@ class Feedback < ActiveRecord::Base
   belongs_to :receiver, class_name: User, foreign_key: :receiver_id
 
   scope :not_published, -> { where(published: false) }
-  scope :for_display, ->(user) { where('published = true OR giver_id = ?', user.id) }
-
-  validates :content, :giver_id, :receiver_id, :feedback_type, presence: true
-
-  def self.publish_all
-    not_published.update_all(published: true)
+  scope :for_display, ->(giver) { where('published = true OR giver_id = ?', giver.id) }
+  scope :for_presentation, ->(receiver, date) do
+    where('published = true AND receiver_id = ? AND published_at > ?', receiver.id, date).order('feedback_type, receiver_id')
   end
 
-  def self.feedbeck_types_for_select
+  validates :content, :giver_id, :receiver_id, :feedback_type, presence: true
+  validate :feedback_to_myself
+
+  def self.publish_all
+    not_published.update_all(published: true, published_at: Date.today)
+  end
+
+  def self.feedback_types_for_select
     FEEDBACK_TYPES.map { |type| [FEEDBACK_TYPES_DICTIONARY[type], type] }
   end
 
@@ -26,5 +30,11 @@ class Feedback < ActiveRecord::Base
     else
       'info'
     end
+  end
+
+  private
+
+  def feedback_to_myself
+    errors.add(:receiver_id, 'You cannot add feedback to yourself!') if giver_id == receiver_id
   end
 end

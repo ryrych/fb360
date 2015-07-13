@@ -1,0 +1,14 @@
+.col-md-6.col-md-offset-3.presentation-panel
+  %span.container-prev
+    = link_to 'Previous', admin_present_feedback_path(receiver_id: receiver.previous.id), class: 'btn btn-info'
+  %span.container-name
+    = receiver.full_name
+  %span.container-next
+    = link_to 'Next', admin_present_feedback_path(receiver_id: receiver.next.id), class: 'btn btn-info'
+
+%table.table.table-striped
+  %tbody
+    - feedbacks.each do |feedback|
+      %tr{class: feedback.tr_class}
+        %td= feedback.content
+        %td{style:'width:200px;text-align:right'}= feedback.giver

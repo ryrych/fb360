@@ -27,6 +27,7 @@
       %th= sort_link(q, :receiver_id, 'Receiver')
       %th= sort_link(q, :giver_id, 'Giver')
       %th= sort_link(q, :feedback_type, 'Type')
+      %th= sort_link(q, :created_at, 'Date')
       %th{style:'width:150px'} Actions
   %tbody
     - feedbacks.each do |feedback|
@@ -35,6 +36,7 @@
         %td= feedback.receiver
         %td= feedback.giver
         %td= Feedback::FEEDBACK_TYPES_DICTIONARY[feedback.feedback_type]
+        %td= feedback.created_at.strftime('%Y-%m-%d')
         %td
           - if feedback.giver == current_user && !feedback.published?
             = link_to 'Edit', edit_user_feedback_path(feedback), class: 'btn btn-info'

@@ -3,6 +3,7 @@ class User::ProfileController < User::UserController
 
   def update
     if user.update_attributes(user_params)
+      sign_in(user, bypass: true)
       redirect_to edit_user_profile_path, notice: 'Profile has been updated.'
     else
       render :edit

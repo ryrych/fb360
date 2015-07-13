@@ -4,7 +4,7 @@ class Admin::UsersController < Admin::AdminController
 
   def create
     if user.save
-      redirect_to admin_users_path(notice: 'User has been created.')
+      redirect_to admin_users_path, notice: 'User has been created.'
     else
       render :new
     end
@@ -12,7 +12,7 @@ class Admin::UsersController < Admin::AdminController
 
   def update
     if user.save
-      redirect_to admin_users_path(notice: 'User has been updated.')
+      redirect_to admin_users_path, notice: 'User has been updated.'
     else
       render :edit
     end
@@ -21,6 +21,6 @@ class Admin::UsersController < Admin::AdminController
   private
 
   def user_params
-    params.require(:user).permit(:email, :first_name, :last_name, :archived, :admin)
+    params.require(:user).permit(:email, :first_name, :last_name, :archived, :admin, :password, :password_confirmation)
   end
 end

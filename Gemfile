@@ -17,7 +17,7 @@ gem 'decent_exposure'
 gem 'devise'
 gem 'jquery-ui-rails'
 gem 'less-rails'
-gem 'momentjs-rails', '~> 2.9',  :github => 'derekprior/momentjs-rails'
+gem 'momentjs-rails', '~> 2.9', github: 'derekprior/momentjs-rails'
 gem 'pg'
 gem 'pry'
 gem 'ransack'
@@ -33,6 +33,7 @@ group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   gem 'spring'
+  gem 'factory_girl_rails'
 end
 
 group :test do

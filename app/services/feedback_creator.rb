@@ -1,5 +1,6 @@
 class FeedbackCreator
   def initialize(current_user, params)
+    params = params.with_indifferent_access
     @giver = current_user
     @receiver = User.find(params.fetch(:receiver_id))
     @content = params.fetch(:content)
