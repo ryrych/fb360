@@ -15,6 +15,7 @@ gem 'haml'
 gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', branch: 'master', submodules: true
 gem 'decent_exposure'
 gem 'devise'
+gem 'omniauth-google-oauth2', '~> 0.2.6'
 gem 'jquery-ui-rails'
 gem 'less-rails'
 gem 'momentjs-rails', '~> 2.9', github: 'derekprior/momentjs-rails'

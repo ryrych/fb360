@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
+  devise :omniauthable, :omniauth_providers => [:google_oauth2]
 
   scope :for_display, -> { order(:first_name, :last_name) }
   scope :active, -> { where(archived: false) }
@@ -20,6 +20,13 @@ class User < ActiveRecord::Base
 
   def full_name
     "#{first_name} #{last_name}"
+  end
+
+  def self.from_omniauth(auth_data)
+    User.find_or_create_by email: auth_data[:info][:email],
+      uid:        auth_data[:uid],
+      first_name: auth_data[:info][:first_name],
+      last_name:  auth_data[:info][:last_name]
   end
 
   alias_method :to_s, :full_name
